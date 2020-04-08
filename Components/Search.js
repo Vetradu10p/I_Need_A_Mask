@@ -1,25 +1,33 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, Button, Text, FlatList } from 'react-native';
 import pharmacie from "../Helpers/pharmacieData";
+import PharmacieItem from './PharmacieItem';
+import { getPharmacies } from '../api/PHARMACIEApi'
 
 class Search extends React.Component {
+
+    _loadPharmacies() {
+        getPharmacies("pharmacie").then(data => console.log(data))
+    }
+
     render() {
         return (
             <View style={styles.main_container}>
                 <TextInput style={styles.textInput} placeholder='Recherchez une pharmacie'/>
-                <Button title='Rechercher' onPress={{} = {}}/>
+                <Button title='Rechercher' onPress={{} = this._loadPharmacies()}/>
                 <FlatList
                     data={pharmacie}
-                    renderItem={({item}) => <Text>{item.nom}</Text>}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({item}) => <PharmacieItem pharmacie={item}/>}
                 />
             </View>
-        );
+        )
     }
 }
 
 const styles = StyleSheet.create({
     main_container: {
-        marginTop: 20,
+        marginTop: 35,
         flex: 1
 },
 
