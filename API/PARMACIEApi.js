@@ -7,5 +7,5 @@ export const getPharmacies = (url) => {
         });
 };
 
-export default PHARMACIEApi;
+export default PHARMACIEApi
 
