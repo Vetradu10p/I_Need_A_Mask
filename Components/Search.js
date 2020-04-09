@@ -6,8 +6,8 @@ import { getPharmacies } from '../API/Pharmacie'
 class Search extends React.Component {
 
     constructor(props) {
-        super(props)
-        this.searchedText = ""
+        super(props);
+        this.searchedText = "";
         this.state = {
             pharmacies: []
         }

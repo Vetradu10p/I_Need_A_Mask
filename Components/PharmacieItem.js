@@ -3,8 +3,8 @@ import {Image, StyleSheet, Text, View} from 'react-native'
 
 class PharmacieItem extends React.Component {
     render() {
-        const pharmacie = this.props.pharmacie
-        console.log(this.props)
+        const pharmacie = this.props.pharmacie;
+        console.log(this.props);
         return (
             <View style={styles.main_container}>
                 <Image
