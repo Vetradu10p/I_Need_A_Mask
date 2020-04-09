@@ -1,24 +1,44 @@
-import React from 'react';
-import { StyleSheet, View, TextInput, Button, Text, FlatList } from 'react-native';
-import pharmacie from "../Helpers/pharmacieData";
-import PharmacieItem from './PharmacieItem';
-import { getPharmacies } from '../api/PHARMACIEApi'
+import React from 'react'
+import { StyleSheet, View, TextInput, Button, Text, FlatList } from 'react-native'
+import PharmacieItem from './PharmacieItem'
+import { getPharmacies } from '../API/Pharmacie'
 
 class Search extends React.Component {
 
+    constructor(props) {
+        super(props)
+        this.searchedText = ""
+        this.state = {
+            pharmacies: []
+        }
+    }
+
     _loadPharmacies() {
-        getPharmacies("pharmacie").then(data => console.log(data))
+        if (this.searchedText.length > 0) {
+            getPharmacies(this.searchedText).then(data => {
+                this.setState({ pharmacies: data.results })
+            })
+        }
+    }
+
+    _searchTextInputChanged(text) {
+        this.searchedText = text
     }
 
     render() {
+        console.log("RENDER")
         return (
             <View style={styles.main_container}>
-                <TextInput style={styles.textInput} placeholder='Recherchez une pharmacie'/>
-                <Button title='Rechercher' onPress={{} = this._loadPharmacies()}/>
+                <TextInput
+                    style={styles.textinput}
+                    placeholder='Nom de la pharmacie'
+                    onChangeText={(text) => this._searchTextInputChanged(text)}
+                />
+                <Button title='Rechercher' onPress={() => this._loadPharmacies()}/>
                 <FlatList
-                    data={pharmacie}
+                    data={this.state.pharmacies}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({item}) => <PharmacieItem pharmacie={item}/>}
+                    renderItem={({item}) => <PharmacieItem film={item}/>}
                 />
             </View>
         )
@@ -27,11 +47,10 @@ class Search extends React.Component {
 
 const styles = StyleSheet.create({
     main_container: {
-        marginTop: 35,
-        flex: 1
-},
-
-    textInput: {
+        flex: 1,
+        marginTop: 35
+    },
+    textinput: {
         marginLeft: 5,
         marginRight: 5,
         height: 50,
@@ -41,4 +60,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Search;
+export default Search

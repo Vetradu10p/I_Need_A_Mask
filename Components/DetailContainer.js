@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getPharmacies} from "../API/PARMACIEApi";
+import {getPharmacies} from "../API/Pharmacie";
 import {View} from "react-native-web";
 
 class DetailContainer extends Component {
